@@ -17,10 +17,23 @@ connectDB();
 const app = express();
 
 // ── Middleware ────────────────────────────────────────────────────────────────
+const allowedOrigins = [
+  'https://jitoeventadmin.vercel.app',
+  'http://localhost:5174',
+  'http://localhost:3000',
+];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*',   // restrict to your Vercel URL in prod
-  methods: ['GET', 'POST', 'OPTIONS'],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    console.warn(`CORS blocked request from origin: ${origin}`);
+    return callback(new Error('Not allowed by CORS'));
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 }));
 
 app.use(express.json());
