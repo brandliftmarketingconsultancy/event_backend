@@ -19,6 +19,7 @@ const app = express();
 // ── Middleware ────────────────────────────────────────────────────────────────
 const allowedOrigins = [
   'https://jitoeventadmin.vercel.app',
+  'https://jito-skillathon.vercel.app',
   'http://localhost:5174',
   'http://localhost:3000',
 ];
